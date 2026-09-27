@@ -1,0 +1,72 @@
+{
+  "info": {
+    "name": "OMDb Movie API",
+    "description": "Request pencarian dan detail film menggunakan OMDb API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search Movies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://{{baseUrl}}/?apikey={{apikey}}&s=Avengers",
+          "protocol": "https",
+          "host": ["{{baseUrl}}"],
+          "path": [""],
+          "query": [
+            { "key": "apikey", "value": "{{apikey}}" },
+            { "key": "s", "value": "Avengers" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('OMDb found movies', function () { pm.expect(pm.response.json().Response).to.eql('True'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Movie Detail",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://{{baseUrl}}/?apikey={{apikey}}&i={{imdbID}}",
+          "protocol": "https",
+          "host": ["{{baseUrl}}"],
+          "path": [""],
+          "query": [
+            { "key": "apikey", "value": "{{apikey}}" },
+            { "key": "i", "value": "{{imdbID}}" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('OMDb returned movie detail', function () { pm.expect(pm.response.json().Response).to.eql('True'); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "www.omdbapi.com" },
+    { "key": "apikey", "value": "6640d7c1" },
+    { "key": "imdbID", "value": "tt0848228" }
+  ]
+}
